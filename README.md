@@ -7,13 +7,13 @@ Yes, it's very simple. That's the idea.
 ## Example
 
 ```
-$> Itemize.exe
+$> .\Itemize.exe
 You have:
   An item
-$> Itemize.exe 4
+$> .\Itemize.exe 4
 You have:
   Four items
-$> Itemize.exe 42
+$> .\Itemize.exe 42
 You have: 
   42 items
 ```
