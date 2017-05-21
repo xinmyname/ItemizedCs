@@ -6,15 +6,17 @@ Yes, it's very simple. That's the idea.
 
 ## Example
 
-  $> Itemize.exe
-  You have:
-    An item
-  $> Itemize.exe 4
-  You have:
-    Four items
-  $> Itemize.exe 42
-  You have: 
-    42 items
+```
+$> Itemize.exe
+You have:
+  An item
+$> Itemize.exe 4
+You have:
+  Four items
+$> Itemize.exe 42
+You have: 
+  42 items
+```
 
 ## Prerequisites
 - Visual Studio 2017
