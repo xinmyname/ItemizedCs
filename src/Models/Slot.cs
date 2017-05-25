@@ -1,4 +1,6 @@
-﻿namespace Itemize.Models
+﻿using Itemize.Infrastructure;
+
+namespace Itemize.Models
 {
     public class Slot
     {
@@ -15,9 +17,7 @@
         {
             string quantityText;
 
-            string text = Quantity == 1 
-                ? $"{Item}" 
-                : $"{Item}s" ;
+            string text = Item.ToString().Pluralize(Quantity);
 
             switch (Quantity)
             {
