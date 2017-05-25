@@ -7,21 +7,21 @@ Yes, it's very simple. That's the idea.
 ## Example
 
 ```
-$> .\Itemize.exe
+$> dotnet run 
 You have:
   An item
-$> .\Itemize.exe 4
+$> dotnet run 4
 You have:
   Four items
-$> .\Itemize.exe 42
+$> dotnet run 42
 You have: 
   42 items
 ```
 
 ## Prerequisites
-- Visual Studio 2017
-- .NET Framework 4.6.1
+- .NET Core 2.0 Preview 1
 
 ## Notes
 
-I'll move this .NET Core later, for now it just builds/runs in Windows.
+- Builds from CLI, Visual Studio Code or Visual Studio 2017.
+- Add RuntimeIdentifier to .csproj file if you want an executable
