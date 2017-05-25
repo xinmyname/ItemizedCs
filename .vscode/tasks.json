@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/itemize.csproj"
+                "${workspaceRoot}/src/itemize.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
