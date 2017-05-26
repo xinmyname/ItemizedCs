@@ -58,30 +58,30 @@ namespace Itemize.Infrastructure {
                 "unemployment", "unity", "validity", "veal", "vengeance", "violence"
             };
 
-            Add(rule: "$", with: "$1s");
-            Add(rule: "s$", with: "$1ses");
+            Add(rule: "$", with: "s");
+            Add(rule: "s$", with: "ses");
             Add(rule: "(t|r|l|b)y$", with: "$1ies");
-            Add(rule: "x$", with: "$1xes");
+            Add(rule: "x$", with: "xes");
             Add(rule: "(sh|zz|ss)$", with: "$1es");
             Add(rule: "(ax)is", with: "$1es");
             Add(rule: "(cact|nucle|alumn|bacill|fung|radi|stimul|syllab)us$", with: "$1i");
             Add(rule: "(corp)us$", with: "$1ora");
-            Add(rule: "sis$", with: "$1ses");
-            Add(rule: "ch$", with: "$1ches");
-            Add(rule: "o$", with: "$1os");
+            Add(rule: "sis$", with: "ses");
+            Add(rule: "ch$", with: "ches");
+            Add(rule: "o$", with: "os");
             Add(rule: "(buffal|carg|mosquit|torped|zer|vet|her|ech)o$", with: "$1oes");
-            Add(rule: "fe$", with: "$1ves");
+            Add(rule: "fe$", with: "ves");
             Add(rule: "(thie)f$", with: "$1ves");
-            Add(rule: "oaf$", with: "$1oaves");
-            Add(rule: "um$", with: "$1a");
-            Add(rule: "ium$", with: "$1ia");
-            Add(rule: "oof$", with: "$1ooves");
+            Add(rule: "oaf$", with: "oaves");
+            Add(rule: "um$", with: "a");
+            Add(rule: "ium$", with: "ia");
+            Add(rule: "oof$", with: "ooves");
             Add(rule: "(nebul)a", with: "$1ae");
             Add(rule: "(criteri|phenomen)on$", with: "$1a");
             Add(rule: "(potat|tomat|volcan)o$", with: "$1oes");
             Add(rule: "^(|wo|work|fire)man$", with: "$1men");
             Add(rule: "(f)oot$", with: "$1eet");
-            Add(rule: "lf$", with: "$1lves");
+            Add(rule: "lf$", with: "lves");
             Add(rule: "(t)ooth$", with: "$1eeth");
             Add(rule: "(g)oose$", with: "$1eese");
             Add(rule: "^(c)hild$", with: "$1hildren");
@@ -95,7 +95,7 @@ namespace Itemize.Infrastructure {
             Add(rule: "^(ind)ex$", with: "$1ices");
             Add(rule: "^(append|matr)ix$", with: "$1ices");
             Add(rule: "^(b|tabl)eau$", with: "$1eaux");
-            Add(rule: "arf$", with: "$1arves");
+            Add(rule: "arf$", with: "arves");
             Add(rule: "(embarg)o$", with: "$1oes");
             Add(rule: "(gen)us$", with: "$1era");
             Add(rule: "(r)oof$", with: "$1oofs");
@@ -133,7 +133,13 @@ namespace Itemize.Infrastructure {
 
             foreach (var pair in _rules)
             {
-                string newValue = RegExReplace(input: word, pattern: pair.Rule, template: pair.Template);
+                var regex = new Regex(pair.Rule, RegexOptions.IgnoreCase|RegexOptions.Compiled);
+
+                if (!regex.IsMatch(word))
+                    continue;
+
+                string newValue = regex.Replace(word, pair.Template);
+
                 if (newValue != word)
                     return newValue;
             }
@@ -143,9 +149,7 @@ namespace Itemize.Infrastructure {
 
         private string RegExReplace(string input, string pattern, string template)
         {
-            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
-            // TODO: This is broken!
-            return regex.Replace(input, template);
+            return Regex.Replace(input, pattern, template, RegexOptions.IgnoreCase);
         }
     }
 
