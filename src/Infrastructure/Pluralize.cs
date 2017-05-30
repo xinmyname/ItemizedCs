@@ -102,8 +102,8 @@ namespace Itemize.Infrastructure {
             if (count == 1 || String.IsNullOrEmpty(word) || _uncountables.Contains(word))
                 return word;
             
-            foreach (var pair in _rules)
-            {
+            foreach (var pair in _rules) {
+
                 var regex = new Regex(pair.rule, RegexOptions.IgnoreCase|RegexOptions.Compiled);
 
                 if (!regex.IsMatch(word))
@@ -119,10 +119,8 @@ namespace Itemize.Infrastructure {
         }
     }
 
-    public static class StringExtensions
-    {
-        public static string Pluralize(this string self, int count = 2)
-        {
+    public static class StringExtensions {        
+        public static string Pluralize(this string self, int count = 2) {
             return Infrastructure.Pluralize.SharedInstance.PluralOf(self, count);
         }
     }

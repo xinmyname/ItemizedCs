@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using Itemize.Infrastructure;
 using Itemize.Models;
 
-namespace Itemize
-{
-    internal class Bootstrapper
-    {
-        private static int Main(string[] args)
-        {
+namespace Itemize {
+
+    internal class Bootstrapper {
+
+        private static int Main(string[] args) {
+
             int numItems = 1;
 
             var argQueue = new Queue<string>(args);
 
-            while (argQueue.Count > 0)
-            {
+            while (argQueue.Count > 0) {
+
                 string arg = argQueue.Dequeue();
-                switch (arg)
-                {
+
+                switch (arg) {
                     case "/?":
                     case "/h":
                     case "-?":
@@ -45,8 +45,8 @@ namespace Itemize
             return 0;
         }
 
-        private static int ShowHelp()
-        {
+        private static int ShowHelp() {
+            
             Console.WriteLine("Usage: itemize [count]");
             Console.WriteLine();
             Console.WriteLine("  count   number of items to add");

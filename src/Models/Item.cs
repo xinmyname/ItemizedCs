@@ -1,16 +1,14 @@
-﻿namespace Itemize.Models
-{
-    public class Item
-    {
+﻿namespace Itemize.Models {
+
+    public class Item {
+
         public Descriptor Descriptor { get; }
 
-        public Item()
-        {
+        public Item() {
             Descriptor = Descriptor.Default;
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return "item";
         }
     }
