@@ -4,24 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace Itemize.Infrastructure {
 
-    public class Pluralize
-    {
-        public struct RulePair
-        {
-            public string Rule { get; set; }
-            public string Template { get; set; }
-        }
+    public class Pluralize {
 
-        private readonly List<string> _uncountables;
-        private readonly IList<RulePair> _rules = new List<RulePair>();
-        private static readonly Lazy<Pluralize> LazyInstance = new Lazy<Pluralize>(() => new Pluralize());
-
-        public static Pluralize SharedInstance => LazyInstance.Value;
-
-        private Pluralize()
-        {
-            _uncountables = new List<string>
-            { 
+        private readonly List<string> _uncountables = new List<string> { 
                 "access", "accommodation", "adulthood", "advertising", "advice",
                 "aggression", "aid", "air", "alcohol", "anger", "applause",
                 "arithmetic", "art", "assistance", "athletics", "attention",
@@ -55,90 +40,76 @@ namespace Itemize.Infrastructure {
                 "sorrow", "soup", "speed", "spelling", "steam", "stuff", "stupidity",
                 "sunshine", "symmetry", "tennis", "thirst", "thunder", "toast",
                 "tolerance", "toys", "traffic", "transporation", "travel", "trust", "understanding",
-                "unemployment", "unity", "validity", "veal", "vengeance", "violence"
+                "unemployment", "unity", "validity", "veal", "vengeance", "violence",
+                "sheep", "deer", "moose", "swine", "bison", "corps", "means", "series",
+                "scissors", "species"
             };
 
-            Add(rule: "$", with: "s");
-            Add(rule: "s$", with: "ses");
-            Add(rule: "(t|r|l|b)y$", with: "$1ies");
-            Add(rule: "x$", with: "xes");
-            Add(rule: "(sh|zz|ss)$", with: "$1es");
-            Add(rule: "(ax)is", with: "$1es");
-            Add(rule: "(cact|nucle|alumn|bacill|fung|radi|stimul|syllab)us$", with: "$1i");
-            Add(rule: "(corp)us$", with: "$1ora");
-            Add(rule: "sis$", with: "ses");
-            Add(rule: "ch$", with: "ches");
-            Add(rule: "o$", with: "os");
-            Add(rule: "(buffal|carg|mosquit|torped|zer|vet|her|ech)o$", with: "$1oes");
-            Add(rule: "fe$", with: "ves");
-            Add(rule: "(thie)f$", with: "$1ves");
-            Add(rule: "oaf$", with: "oaves");
-            Add(rule: "um$", with: "a");
-            Add(rule: "ium$", with: "ia");
-            Add(rule: "oof$", with: "ooves");
-            Add(rule: "(nebul)a", with: "$1ae");
-            Add(rule: "(criteri|phenomen)on$", with: "$1a");
-            Add(rule: "(potat|tomat|volcan)o$", with: "$1oes");
-            Add(rule: "^(|wo|work|fire)man$", with: "$1men");
-            Add(rule: "(f)oot$", with: "$1eet");
-            Add(rule: "lf$", with: "lves");
-            Add(rule: "(t)ooth$", with: "$1eeth");
-            Add(rule: "(g)oose$", with: "$1eese");
-            Add(rule: "^(c)hild$", with: "$1hildren");
-            Add(rule: "^(o)x$", with: "$1xen");
-            Add(rule: "^(p)erson$", with: "$1eople");
-            Add(rule: "(m|l)ouse$", with: "$1ice");
-            Add(rule: "^(d)ie$", with: "$1ice");
-            Add(rule: "^(alg|vertebr|vit)a$", with: "$1ae");
-            Add(rule: "^(a)lumna$", with: "$1lumnae");
-            Add(rule: "^(a)pparatus$", with: "$1pparatuses");
-            Add(rule: "^(ind)ex$", with: "$1ices");
-            Add(rule: "^(append|matr)ix$", with: "$1ices");
-            Add(rule: "^(b|tabl)eau$", with: "$1eaux");
-            Add(rule: "arf$", with: "arves");
-            Add(rule: "(embarg)o$", with: "$1oes");
-            Add(rule: "(gen)us$", with: "$1era");
-            Add(rule: "(r)oof$", with: "$1oofs");
-            Add(rule: "(l)eaf$", with: "$1eaves");
-            Add(rule: "(millen)ium$", with: "$1ia");
-            Add(rule: "(th)at$", with: "$1ose");
-            Add(rule: "(th)is$", with: "$1ese");
+        private readonly IList<(string rule, string template)> _rules = new List<(string rule, string template)> {
+            (rule: "(th)is$", template: "$1ese"),
+            (rule: "(th)at$", template: "$1ose"),
+            (rule: "(millen)ium$", template: "$1ia"),
+            (rule: "(l)eaf$", template: "$1eaves"),
+            (rule: "(r)oof$", template: "$1oofs"),
+            (rule: "(gen)us$", template: "$1era"),
+            (rule: "(embarg)o$", template: "$1oes"),
+            (rule: "arf$", template: "arves"),
+            (rule: "^(b|tabl)eau$", template: "$1eaux"),
+            (rule: "^(append|matr)ix$", template: "$1ices"),
+            (rule: "^(ind)ex$", template: "$1ices"),
+            (rule: "^(a)pparatus$", template: "$1pparatuses"),
+            (rule: "^(a)lumna$", template: "$1lumnae"),
+            (rule: "^(alg|vertebr|vit)a$", template: "$1ae"),
+            (rule: "^(d)ie$", template: "$1ice"),
+            (rule: "(m|l)ouse$", template: "$1ice"),
+            (rule: "^(p)erson$", template: "$1eople"),
+            (rule: "^(o)x$", template: "$1xen"),
+            (rule: "^(c)hild$", template: "$1hildren"),
+            (rule: "(g)oose$", template: "$1eese"),
+            (rule: "(t)ooth$", template: "$1eeth"),
+            (rule: "lf$", template: "lves"),
+            (rule: "(f)oot$", template: "$1eet"),
+            (rule: "^(|wo|work|fire)man$", template: "$1men"),
+            (rule: "(potat|tomat|volcan)o$", template: "$1oes"),
+            (rule: "(criteri|phenomen)on$", template: "$1a"),
+            (rule: "(nebul)a", template: "$1ae"),
+            (rule: "oof$", template: "ooves"),
+            (rule: "ium$", template: "ia"),
+            (rule: "um$", template: "a"),
+            (rule: "oaf$", template: "oaves"),
+            (rule: "(thie)f$", template: "$1ves"),
+            (rule: "fe$", template: "ves"),
+            (rule: "(buffal|carg|mosquit|torped|zer|vet|her|ech)o$", template: "$1oes"),
+            (rule: "o$", template: "os"),
+            (rule: "ch$", template: "ches"),
+            (rule: "sis$", template: "ses"),
+            (rule: "(corp)us$", template: "$1ora"),
+            (rule: "(cact|nucle|alumn|bacill|fung|radi|stimul|syllab)us$", template: "$1i"),
+            (rule: "(ax)is", template: "$1es"),
+            (rule: "(sh|zz|ss)$", template: "$1es"),
+            (rule: "x$", template: "xes"),
+            (rule: "(t|r|l|b)y$", template: "$1ies"),
+            (rule: "s$", template: "ses"),
+            (rule: "$", template: "s")        
+        };
 
-            Unchanging(word: "sheep");
-            Unchanging(word: "deer");
-            Unchanging(word: "moose");
-            Unchanging(word: "swine");
-            Unchanging(word: "bison");
-            Unchanging(word: "corps");
-            Unchanging(word: "means");
-            Unchanging(word: "series");
-            Unchanging(word: "scissors");
-            Unchanging(word: "species");
-        }
+        private static readonly Lazy<Pluralize> LazyInstance = new Lazy<Pluralize>(() => new Pluralize());
 
-        private void Add(string rule, string with)
-        {
-            _rules.Insert(0, new RulePair{ Rule = rule, Template = with});
-        }
+        public static Pluralize SharedInstance => LazyInstance.Value;
 
-        private void Unchanging(string word)
-        {
-            _uncountables.Insert(0, word.ToLower());
-        }
+        public string PluralOf(string word = "", int count = 2) {
 
-        public string Apply(string word)
-        {
-            if (_uncountables.Contains(word.ToLower()) || word.Length == 0)
+            if (count == 1 || String.IsNullOrEmpty(word) || _uncountables.Contains(word))
                 return word;
-
+            
             foreach (var pair in _rules)
             {
-                var regex = new Regex(pair.Rule, RegexOptions.IgnoreCase|RegexOptions.Compiled);
+                var regex = new Regex(pair.rule, RegexOptions.IgnoreCase|RegexOptions.Compiled);
 
                 if (!regex.IsMatch(word))
                     continue;
 
-                string newValue = regex.Replace(word, pair.Template);
+                string newValue = regex.Replace(word, pair.template);
 
                 if (newValue != word)
                     return newValue;
@@ -146,24 +117,13 @@ namespace Itemize.Infrastructure {
 
             return word;
         }
-
-        private string RegExReplace(string input, string pattern, string template)
-        {
-            return Regex.Replace(input, pattern, template, RegexOptions.IgnoreCase);
-        }
     }
 
     public static class StringExtensions
     {
-        public static string Pluralize(this string self, int count = 2, string with = "")
+        public static string Pluralize(this string self, int count = 2)
         {
-            if (count == 1)
-                return self;
-
-            if (with.Length == 0)
-                return Infrastructure.Pluralize.SharedInstance.Apply(word: self);
-
-            return with;
+            return Infrastructure.Pluralize.SharedInstance.PluralOf(self, count);
         }
     }
 }

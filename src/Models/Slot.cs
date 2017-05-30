@@ -1,26 +1,24 @@
 ﻿using Itemize.Infrastructure;
 
-namespace Itemize.Models
-{
-    public class Slot
-    {
+namespace Itemize.Models {
+
+    public class Slot {
+
         public int Quantity { get; set; }
         public Item Item { get; set; }
 
-        public Slot(Item item)
-        {
+        public Slot(Item item) {
             Quantity = 1;
             Item = item;
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
+
             string quantityText;
 
             string text = Item.ToString().Pluralize(Quantity);
 
-            switch (Quantity)
-            {
+            switch (Quantity) {
                 case 1: quantityText = "An"; break;
                 case 0: quantityText = "No"; break;
                 case 2: quantityText = "Two"; break;
