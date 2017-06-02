@@ -67,7 +67,7 @@ namespace Itemize.Infrastructure {
             (rule: "(t)ooth$", template: "$1eeth"),
             (rule: "lf$", template: "lves"),
             (rule: "(f)oot$", template: "$1eet"),
-            (rule: "^(|wo|work|fire)man$", template: "$1men"),
+            (rule: "^(wo|work|fire)man$", template: "$1men"),
             (rule: "(potat|tomat|volcan)o$", template: "$1oes"),
             (rule: "(criteri|phenomen)on$", template: "$1a"),
             (rule: "(nebul)a", template: "$1ae"),
@@ -86,7 +86,7 @@ namespace Itemize.Infrastructure {
             (rule: "(ax)is", template: "$1es"),
             (rule: "(sh|zz|ss)$", template: "$1es"),
             (rule: "x$", template: "xes"),
-            (rule: "(t|r|l|b)y$", template: "$1ies"),
+            (rule: "(t|sp|r|l|b)y$", template: "$1ies"),
             (rule: "s$", template: "ses"),
             (rule: "$", template: "s")        
         };
