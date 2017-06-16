@@ -33,3 +33,13 @@ $> dotnet test
 
 - Builds from CLI, Visual Studio Code or Visual Studio 2017.
 - Add RuntimeIdentifier to .csproj file if you want an executable
+
+## The Good Parts
+- Easy to modularlize
+- Feature rich (tuples, clousures, generics, etc.)
+- Large standard library
+
+## Airing of Grievances
+- Difficult to create a native executable
+- Very large deployment size, due to large standard library
+- Slow startup time

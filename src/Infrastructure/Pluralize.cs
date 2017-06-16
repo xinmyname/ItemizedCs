@@ -6,44 +6,42 @@ namespace Itemize.Infrastructure {
 
     public class Pluralize {
 
-        private readonly List<string> _uncountables = new List<string> { 
-                "access", "accommodation", "adulthood", "advertising", "advice",
-                "aggression", "aid", "air", "alcohol", "anger", "applause",
-                "arithmetic", "art", "assistance", "athletics", "attention",
-                "bacon", "baggage", "ballet", "beauty", "beef", "beer", "biology",
-                "botany", "bread", "butter", "carbon", "cash", "chaos", "cheese",
-                "chess", "childhood", "clothing", "coal", "coffee", "commerce",
-                "compassion", "comprehension", "content", "corruption", "cotton",
-                "courage", "currency", "dancing", "danger", "data", "delight",
-                "dignity", "dirt", "distribution", "dust", "economics", "education",
-                "electricity", "employment", "engineering", "envy", "equipment",
-                "ethics", "evidence", "evolution", "faith", "fame", "fish", "flour", "flu",
-                "food", "freedom", "fuel", "fun", "furniture", "garbage", "garlic",
-                "genetics", "gold", "golf", "gossip", "grammar", "gratitude", "grief",
-                "ground", "guilt", "gymnastics", "hair", "happiness", "hardware",
-                "harm", "hate", "hatred", "health", "heat", "height", "help", "homework",
-                "honesty", "honey", "hospitality", "housework", "humour", "hunger",
-                "hydrogen", "ice", "ice", "cream", "importance", "inflation", "information",
-                "injustice", "innocence", "iron", "irony", "jealousy", "jelly", "judo",
-                "karate", "kindness", "knowledge", "labour", "lack", "laughter", "lava",
-                "leather", "leisure", "lightning", "linguistics", "litter", "livestock",
-                "logic", "loneliness", "luck", "luggage", "machinery", "magic",
-                "management", "mankind", "marble", "mathematics", "mayonnaise",
-                "measles", "meat", "methane", "milk", "money", "mud", "music", "nature",
-                "news", "nitrogen", "nonsense", "nurture", "nutrition", "obedience",
-                "obesity", "oil", "oxygen", "passion", "pasta", "patience", "permission",
-                "physics", "poetry", "pollution", "poverty", "power", "pronunciation",
-                "psychology", "publicity", "quartz", "racism", "rain", "relaxation",
-                "reliability", "research", "respect", "revenge", "rice", "rubbish",
-                "rum", "salad", "satire", "seaside", "shame", "shopping", "silence",
-                "sleep", "smoke", "smoking", "snow", "soap", "software", "soil",
-                "sorrow", "soup", "speed", "spelling", "steam", "stuff", "stupidity",
-                "sunshine", "symmetry", "tennis", "thirst", "thunder", "toast",
-                "tolerance", "toys", "traffic", "transporation", "travel", "trust", "understanding",
-                "unemployment", "unity", "validity", "veal", "vengeance", "violence",
-                "sheep", "deer", "moose", "swine", "bison", "corps", "means", "series",
-                "scissors", "species"
-            };
+        private readonly List<string> _uncountables = new List<string> {
+            "access", "accommodation", "adulthood", "advertising", "advice", "aggression",
+            "aid", "air", "alcohol", "anger", "applause", "arithmetic", "art",
+            "assistance", "athletics", "attention", "bacon", "baggage", "ballet",
+            "beauty", "beef", "beer", "biology", "bison", "botany", "bread", "butter",
+            "carbon", "cash", "chaos", "cheese", "chess", "childhood", "clothing",
+            "coal", "coffee", "commerce", "compassion", "comprehension", "content",
+            "corps", "corruption", "cotton", "courage", "cream", "currency", "dancing",
+            "danger", "data", "deer", "delight", "dignity", "dirt", "distribution",
+            "dust", "economics", "education", "electricity", "employment", "engineering",
+            "envy", "equipment", "ethics", "evidence", "evolution", "faith", "fame",
+            "fish", "flour", "flu", "food", "freedom", "fuel", "fun", "furniture",
+            "garbage", "garlic", "genetics", "gold", "golf", "gossip", "grammar",
+            "gratitude", "grief", "ground", "guilt", "gymnastics", "hair", "happiness",
+            "hardware", "harm", "hate", "hatred", "health", "heat", "height", "help",
+            "homework", "honesty", "honey", "hospitality", "housework", "humour",
+            "hunger", "hydrogen", "ice", "importance", "inflation", "information",
+            "injustice", "innocence", "iron", "irony", "jealousy", "jelly", "judo",
+            "karate", "kindness", "knowledge", "labour", "lack", "laughter", "lava",
+            "leather", "leisure", "lightning", "linguistics", "litter", "livestock",
+            "logic", "loneliness", "luck", "luggage", "machinery", "magic", "management",
+            "mankind", "marble", "mathematics", "mayonnaise", "means", "measles", "meat",
+            "methane", "milk", "money", "moose", "mud", "music", "nature", "news",
+            "nitrogen", "nonsense", "nurture", "nutrition", "obedience", "obesity",
+            "oil", "oxygen", "passion", "pasta", "patience", "permission", "physics",
+            "poetry", "pollution", "poverty", "power", "pronunciation", "psychology",
+            "publicity", "quartz", "racism", "rain", "relaxation", "reliability",
+            "research", "respect", "revenge", "rice", "rubbish", "rum", "salad",
+            "satire", "scissors", "seaside", "series", "shame", "sheep", "shopping",
+            "silence", "sleep", "smoke", "smoking", "snow", "soap", "software", "soil",
+            "sorrow", "soup", "species", "speed", "spelling", "steam", "stuff",
+            "stupidity", "sunshine", "swine", "symmetry", "tennis", "thirst", "thunder",
+            "toast", "tolerance", "toys", "traffic", "transporation", "travel", "trust",
+            "understanding", "unemployment", "unity", "validity", "veal", "vengeance",
+            "violence"
+        };
 
         private readonly IList<(string rule, string template)> _rules = new List<(string rule, string template)> {
             (rule: "(th)is$", template: "$1ese"),
@@ -69,7 +67,7 @@ namespace Itemize.Infrastructure {
             (rule: "(t)ooth$", template: "$1eeth"),
             (rule: "lf$", template: "lves"),
             (rule: "(f)oot$", template: "$1eet"),
-            (rule: "^(|wo|work|fire)man$", template: "$1men"),
+            (rule: "^(wo|work|fire)man$", template: "$1men"),
             (rule: "(potat|tomat|volcan)o$", template: "$1oes"),
             (rule: "(criteri|phenomen)on$", template: "$1a"),
             (rule: "(nebul)a", template: "$1ae"),
@@ -88,7 +86,7 @@ namespace Itemize.Infrastructure {
             (rule: "(ax)is", template: "$1es"),
             (rule: "(sh|zz|ss)$", template: "$1es"),
             (rule: "x$", template: "xes"),
-            (rule: "(t|r|l|b)y$", template: "$1ies"),
+            (rule: "(t|sp|r|l|b)y$", template: "$1ies"),
             (rule: "s$", template: "ses"),
             (rule: "$", template: "s")        
         };
@@ -99,7 +97,7 @@ namespace Itemize.Infrastructure {
 
         public string PluralOf(string word = "", int count = 2) {
 
-            if (count == 1 || String.IsNullOrEmpty(word) || _uncountables.Contains(word))
+            if (count == 1 || String.IsNullOrEmpty(word) || _uncountables.BinarySearch(word) >= 0)
                 return word;
             
             foreach (var pair in _rules) {
