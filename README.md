@@ -18,6 +18,14 @@ You have:
   42 items
 ```
 
+## Testing
+
+Change to the tests folder and run:
+
+```
+$> dotnet test
+```
+
 ## Prerequisites
 - .NET Core 2.0 Preview 1
 
