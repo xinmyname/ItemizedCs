@@ -20,10 +20,8 @@ You have:
 
 ## Testing
 
-Change to the tests folder and run:
-
 ```
-$> dotnet test
+$> dotnet test tests
 ```
 
 ## Prerequisites

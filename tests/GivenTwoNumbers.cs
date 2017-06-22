@@ -1,17 +1,18 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Itemize.Infrastructure;
 
 namespace tests
 {
     [TestClass]
-    public class GivenTwoNumbers
+    public class GivenAPluralizer
     {
         [TestClass]
-        public class WhenAdded
+        public class ThePluralOf
         {
             [TestMethod]
-            public void TheSumIsCorrect()
+            public void CatIsCats()
             {
-                Assert.AreEqual(4, 2 + 2);
+                Assert.AreEqual("cats", "cat".Pluralize());
             }
         }
     }
