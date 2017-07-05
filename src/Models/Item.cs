@@ -5,7 +5,7 @@
         public Descriptor Descriptor { get; }
 
         public Item() {
-            Descriptor = Descriptor.Default;
+            Descriptor = new Descriptor();
         }
 
         public override string ToString() {
