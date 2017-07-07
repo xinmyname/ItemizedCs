@@ -49,6 +49,10 @@ namespace Itemize.Models {
             }
         }
 
+        public DescriptorIterator Iterator {
+            get { return new DescriptorIterator(this); }
+        }
+
         public override int GetHashCode() {
             int result = 0;
 
