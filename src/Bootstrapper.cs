@@ -31,10 +31,9 @@ namespace Itemize {
             }
 
             var inventory = new Inventory();
-            var itemFactory = new ItemFactory();
 
             for (int i = 0; i < numItems; i++)
-                inventory.AddItem(itemFactory.MakeItem());
+                inventory.AddItem(new Item());
 
             Console.WriteLine("You have:");
             Console.WriteLine();

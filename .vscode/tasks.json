@@ -1,24 +1,45 @@
 {
-    "version": "0.1.0",
-    "command": "dotnet",
-    "isShellCommand": true,
-    "args": [],
+    "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "build",
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "${workspaceRoot}/src/itemize.csproj"
+                "build",
+                "${workspaceFolder}/src/itemize.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
-            "isBuildCommand": true,
+            "problemMatcher": "$msCompile",
+            "group": { 
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/itemize.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
             "problemMatcher": "$msCompile"
         },
         {
-            "taskName": "test",
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "${workspaceRoot}/tests/tests.csproj"
+                "watch",
+                "run",
+                "${workspaceFolder}/src/itemize.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
-            "isTestCommand": true,
-            "showOutput": "always",
             "problemMatcher": "$msCompile"
         }
     ]

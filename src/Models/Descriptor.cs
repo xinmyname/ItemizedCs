@@ -42,10 +42,7 @@ namespace Itemize.Models {
                 return index;
             }
             set {
-                if (value == null)
-                    _contents[pos] = -1;
-
-                _contents[pos] = value.Value;
+                _contents[pos] = value ?? -1;
             }
         }
 
