@@ -12,7 +12,7 @@ namespace tests
             [TestMethod]
             public void CatIsCats()
             {
-                Assert.AreEqual("cats", "cat".Pluralize());
+                Assert.AreEqual("cats", "^cat".Pluralized());
             }
         }
     }

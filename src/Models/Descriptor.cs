@@ -8,46 +8,41 @@ namespace Itemize.Models {
 
         private IList<int> _contents;
 
+        public int Count => _contents.Count;
+
         public Descriptor() {
             _contents = new List<int>();
         }        
 
         public Descriptor(string that) {
-            _contents = new List<int>(that.Split("-").Select(x => x == "?" ? -1 : int.Parse(x)));
+            _contents = new List<int>(that.Split("-").Select(x => int.Parse(x)));
         }
 
         public Descriptor(IEnumerable<int> that) {
             _contents = new List<int>(that);
         }
 
+        public int this[int pos] {
+            get { return _contents[pos]; }
+        }
+
         public override string ToString() {
-            return String.Join('-', _contents.Select(x => x < 0 ? "?" : x.ToString()));
-        }
-
-        public void Append(int? index) {
-            if (index == null)
-                _contents.Add(-1);
-            else
-                _contents.Add(index.Value);
-        }
-
-        public int Count => _contents.Count;
-
-        public int? this[int pos]
-        {
-            get {
-                int index = _contents[pos];
-                if (index < 0)
-                    return null;
-                return index;
-            }
-            set {
-                _contents[pos] = value ?? -1;
-            }
+            return String.Join('-', _contents);
         }
 
         public DescriptorIterator Iterator {
             get { return new DescriptorIterator(this); }
+        }
+
+        public void Append(int index) {
+            _contents.Add(index);
+        }
+
+        public void Append(int? index) {
+            if (index == null)
+                _contents.Add(0);
+            else
+                _contents.Add(index.Value+1);
         }
 
         public override int GetHashCode() {
@@ -92,7 +87,7 @@ namespace Itemize.Models {
             _descriptor = new WeakReference<Descriptor>(descriptor);
         }
 
-        public int? Next() {
+        public int Next() {
             Descriptor descriptor;
 
             if (!_descriptor.TryGetTarget(out descriptor))
@@ -101,11 +96,33 @@ namespace Itemize.Models {
             if (_position >= descriptor.Count)
                 throw new NoMoreItemsException();
 
-            int? index = descriptor[_position];
+            int index = descriptor[_position];
 
             _position += 1;
 
             return index;
+        }
+
+        public int NextIndex() {
+            return Next() - 1;
+        }
+
+        public Item.Kind NextKind() {
+            return Item.Kind.From(Next());
+        }
+
+        public string NextItem(IList<string> items) {
+            return items[NextIndex()];
+        }
+
+        public string NextOptionalItem(IList<string> items) {
+            
+            int value = Next();
+
+            if (value == 0)
+                return "?";
+
+            return items[value - 1];
         }
     }
 }

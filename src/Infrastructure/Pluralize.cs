@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Itemize.Infrastructure {
-
+namespace Itemize.Infrastructure
+{
     public class Pluralize {
 
         private readonly List<string> _uncountables = new List<string> {
@@ -114,12 +114,6 @@ namespace Itemize.Infrastructure {
             }
 
             return word;
-        }
-    }
-
-    public static class StringExtensions {        
-        public static string Pluralize(this string self, int count = 2) {
-            return Infrastructure.Pluralize.SharedInstance.PluralOf(self, count);
         }
     }
 }
