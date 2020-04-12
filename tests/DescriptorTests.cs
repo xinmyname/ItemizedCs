@@ -26,8 +26,8 @@ namespace tests
         
         [TestMethod]
         public void testThatADescriptorIsMadeGivenOneIndexAndOneNullIndexAsAString() {
-            var d = new Descriptor("1-?");
-            Assert.AreEqual(d.ToString(), "1-?");
+            var d = new Descriptor("1-0");
+            Assert.AreEqual(d.ToString(), "1-0");
         }
         
         [TestMethod]
@@ -44,8 +44,8 @@ namespace tests
         
         [TestMethod]
         public void testThatADescriptorIsMadeGivenOneIndexAndOneNullIndexAsAnArray() {
-            var d = new Descriptor(new[] {1,-1});
-            Assert.AreEqual(d.ToString(), "1-?");
+            var d = new Descriptor(new[] {1,0});
+            Assert.AreEqual(d.ToString(), "1-0");
         }
     }
 
@@ -55,34 +55,18 @@ namespace tests
         [TestMethod]
         public void testThatAnIndexIsAppended() {
             var d = new Descriptor();
-            d.Append(0);
-            Assert.AreEqual(d.ToString(), "0");
+            d.Append(1);
+            Assert.AreEqual(d.ToString(), "1");
         }
         
         [TestMethod]
         public void testThatANullIndexIsAppended() {
             var d = new Descriptor();
             d.Append(null);
-            Assert.AreEqual(d.ToString(), "?");
+            Assert.AreEqual(d.ToString(), "0");
         }
     }
 
-    [TestClass]
-    public class GivenADescriptorWithANullIndex {
-        
-        [TestMethod]
-        public void testThatTheIndexIsNull() {
-            var d = new Descriptor("?");
-            DescriptorIterator it = d.Iterator;
-
-            try {
-                int? index = it.Next();
-                Assert.IsNull(index);
-            } catch {
-                Assert.Fail();
-            }
-        }
-    }
 
     [TestClass]
     public class GivenADescriptorWithTwoIndices {
@@ -98,7 +82,7 @@ namespace tests
         public void testThatANullIndexIsAppended() {
             var d = new Descriptor("1-2");
             d.Append(null);
-            Assert.AreEqual(d.ToString(), "1-2-?");
+            Assert.AreEqual(d.ToString(), "1-2-0");
         }
         
         [TestMethod]
@@ -124,8 +108,8 @@ namespace tests
         
         [TestMethod]
         public void testThatTheyAreEqual() {
-            var d1 = new Descriptor("1-?-3");
-            var d2 = new Descriptor(new[] {1,-1,3});
+            var d1 = new Descriptor("1-0-3");
+            var d2 = new Descriptor(new[] {1,0,3});
             Assert.AreEqual(d1, d2);
         }
     }
@@ -135,7 +119,7 @@ namespace tests
         
         [TestMethod]
         public void testThatTheyAreNotEqual() {
-            var d1 = new Descriptor("1-?");
+            var d1 = new Descriptor("1-0");
             var d2 = new Descriptor(new[] {2,1});
             Assert.AreNotEqual(d1, d2);
         }
@@ -146,8 +130,8 @@ namespace tests
         
         [TestMethod]
         public void testThatTheyAreNotEqual() {
-            var d1 = new Descriptor("1-?-3-4-5");
-            var d2 = new Descriptor(new[] {1,-1,3});
+            var d1 = new Descriptor("1-0-3-4-5");
+            var d2 = new Descriptor(new[] {1,0,3});
             Assert.AreNotEqual(d1, d2);
         }
     }
