@@ -1,27 +1,26 @@
-﻿using System.Collections.Generic;
+namespace Itemized.Models;
 
-namespace Itemize.Models {
+public class Inventory {
 
-    public class Inventory {
+    private readonly IDictionary<Item,int> _slots;
 
-        private readonly Dictionary<Descriptor, Slot> _slots;
+    public Inventory() {
+        _slots = new Dictionary<Item,int>();
+    }
 
-        public IEnumerable<Slot> Slots => _slots.Values;
-
-        public Inventory() {
-            _slots = new Dictionary<Descriptor, Slot>();
-        }
-
-        public void AddItem(Item item) {
-
-            if (_slots.ContainsKey(item.Descriptor)) {
-
-                Slot slot = _slots[item.Descriptor];
-                slot.Quantity += 1;
-                
-            } else {
-                _slots[item.Descriptor] = new Slot(item);
+    public void Add(Item item, int quantity = 1) {
+        
+        if (_slots.ContainsKey(item)) {
+            if (!item.IsUnique) {
+                int currentQuantity = _slots[item];
+                _slots[item] = currentQuantity + quantity;
             }
+        } else {
+            _slots[item] = quantity;
         }
+    }
+
+    public IEnumerable<(Item,int)> Slots() {
+        return _slots.Select(_ => (_.Key, _.Value));
     }
 }
