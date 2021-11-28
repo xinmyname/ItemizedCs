@@ -19,8 +19,10 @@ using (var stream = new FileStream(lootDatabasePath, FileMode.Open)) {
     var db = new LootDatabase(stream);
     var inventory = new Inventory();
 
+    var counts = new[]{1,1,1,1,1,1,1,2,2,3};
+
     for (int i = 0; i < count; i++)
-        inventory.Add(db.MakeItem());
+        inventory.Add(db.MakeItem(), counts[Random.Shared.Next(counts.Length)]);
     
     foreach ((Item item, int quantity) in inventory.Slots()) {
         Console.WriteLine(db.Describe(item, quantity));

@@ -1,6 +1,8 @@
+using System.Collections;
+
 namespace Itemized.Models;
 
-public class Item {
+public class Item : IEnumerable<int> {
 
     private int[] _contents;
 
@@ -60,4 +62,12 @@ public class Item {
         return string.Join(':', _contents);
     }
 
+    public IEnumerator<int> GetEnumerator() {
+        foreach (int index in _contents)
+            yield return index;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() {
+        return this.GetEnumerator();
+    }
 }

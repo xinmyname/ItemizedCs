@@ -1,4 +1,5 @@
 using Itemized.Models;
+using System.Text;
 using System.Text.Json;
 
 namespace Itemized.Infrastructure;
@@ -54,9 +55,104 @@ public class LootDatabase {
 
     public string Describe(Item item, int quantity) {
 
+        string rawDescription = RawDescription(item);
+        string description = Pluralize(rawDescription, quantity).Trim();
 
+        string quantityText;
+        
+        if (quantity == 1) {
+            quantityText = "aeiouAEIOU".Contains(description[0])
+                ? "An"
+                : "A";
+        } else {
+            quantityText = quantity switch {
+                2 => "Two",
+                3 => "Three",
+                4 => "Four",
+                5 => "Five",
+                6 => "Six",
+                7 => "Seven",
+                8 => "Eight",
+                9 => "Nine",
+                _ => $"{quantity}"
+            };
+        }
 
-        return $"{quantity}x {item}";
+        return $"{quantityText} {description} [{item}]";
+    }
+
+    public string Pluralize(string text, int quantity) {
+
+        if (quantity == 1)
+            return text.Replace("^", "");
+
+        var pluralText = new StringBuilder();
+
+        for (int i = 0; i < text.Length; i++) {
+
+            char ch = text[i];
+
+            if (ch == '^') {
+                int start = i+1;
+                int end = start;
+
+                while (end < text.Length && !Char.IsWhiteSpace(text[end]))
+                    end += 1;
+
+                i = end-1;
+
+                string item = text.Substring(start,end-start);
+
+                pluralText.Append(item.Pluralize());
+
+            } else
+                pluralText.Append(ch);
+        }
+
+        return pluralText.ToString();
+    }
+
+    public string RawDescription(Item item) {
+
+        var indices = new Queue<int>(item);
+
+        bool isUnique = indices.Dequeue() == 1;
+
+        if (isUnique)
+            return _uniqueItemTable.ValueFor(indices.Dequeue());
+        
+        var description = new StringBuilder();
+        string itemTemplate = _commonItemTable.ValueFor(indices.Dequeue());
+
+        for (int i = 0; i < itemTemplate.Length; i++) {
+            
+            int start = i;
+            char ch = itemTemplate[i];
+
+            if (ch == '{') {
+
+                int end = itemTemplate.IndexOf('}', start);
+                var itemProperty = new ItemProperty(itemTemplate.Substring(start+1,end-start-1));
+
+                i = end;
+
+                int index = indices.Dequeue();
+
+                if (index == 0)
+                    continue;
+
+                Table table = _propertyTables[itemProperty.Name];
+
+                description.Append(table.ValueFor(index));
+
+            } else {
+                description.Append(ch);
+            }            
+        }
+
+        description.Replace("  ", " ");
+
+        return description.ToString();
     }
 
     private IEnumerable<ItemProperty> GetPropertiesFromItemTemplate(string itemTemplate) {
